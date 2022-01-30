@@ -1,0 +1,17 @@
+.photo-frame-container{
+  position: relative;
+  display: inline-block;
+  border-radius: 2px 2px;
+  line-height: 0;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.14), 0 1px 18px rgba(0, 0, 0, 0.12);
+
+  .like-bar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: .5rem;
+    background: rgba(255,255,255, .6);
+    border-top-right-radius: 5px;
+    cursor: pointer;
+  }
+}
