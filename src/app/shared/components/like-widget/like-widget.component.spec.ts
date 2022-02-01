@@ -33,9 +33,59 @@ describe(LikeWidgetComponent.name, () => {
 
   it(`#${LikeWidgetComponent.prototype.like.name}
     should trigger (@Output liked) when called`, () => {
-      spyOn(component.liked, 'emit');
+    spyOn(component.liked, 'emit');
+    fixture.detectChanges();
+    component.like();
+    expect(component.liked.emit).toHaveBeenCalled();
+  });
+
+  it('(D) Should display number of likes when clicked', done => {
+
+    fixture.detectChanges();
+
+    component.liked.subscribe(() => {
+      component.likes++;
       fixture.detectChanges();
-      component.like();
-      expect(component.liked.emit).toHaveBeenCalled();
+      const span: HTMLSpanElement =
+        fixture.nativeElement.querySelector('.like-counter');
+      expect(span.textContent.trim()).toBe('1');
+      done();
+    });
+
+    const element: HTMLDivElement =
+      fixture.nativeElement.querySelector('.like-widget-container');
+
+    element.click();
+    /*
+    fixture.detectChanges();
+    
+    const element:HTMLDivElement = fixture.nativeElement.querySelector('.like-widget-container');
+    const span:HTMLSpanElement = fixture.nativeElement.querySelector('span');
+    
+    element.click();
+    component.likes++;
+    
+    fixture.detectChanges();
+    
+    expect(span.textContent.trim()).toBe('1');
+    */
+  });
+
+  it('(D) Should display number of likes when ENTER key is pressed', done => {
+
+    fixture.detectChanges();
+    component.liked.subscribe(() => {
+      component.likes++;
+      fixture.detectChanges();
+
+      const counterEl: HTMLSpanElement = fixture.nativeElement.querySelector('.like-counter');
+      expect(counterEl.textContent.trim()).toBe('1');
+      done();
+    });
+
+    const likeWidgetContainerEl: HTMLDivElement = fixture.nativeElement.querySelector('.like-widget-container');
+    const event = new KeyboardEvent('keyup', { key: 'Enter'});
+    likeWidgetContainerEl.dispatchEvent(event);
+
   });
 });
